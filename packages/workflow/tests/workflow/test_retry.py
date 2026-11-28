@@ -318,6 +318,8 @@ def retried_once(task):
     return first if first and task.task_attempt == 1 else Succeed()
 
 
+# Measured at 140 s, so the mark leaves four times the run.
+@pytest.mark.timeout(600)
 def test_history_shape(temporal, rig, plan, placer, capsys):
     """Prints the history events of a job, of each task and of each retry, and the events one hour
     of placement outage adds, measured on the dev server."""

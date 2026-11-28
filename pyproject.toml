@@ -51,6 +51,7 @@ dsy-workloads = { workspace = true }
 dev = [
     "hypothesis",
     "pytest",
+    "pytest-timeout",
     "pytest-xdist",
     "dsy-acceptance",
     "dsy-admission",
@@ -93,6 +94,9 @@ dev = [
 [tool.pytest.ini_options]
 # Several packages have a tests/test_vectors.py, so test modules are imported by path and not by basename.
 addopts = "--import-mode=importlib --strict-markers"
+# A hung test fails with a stack dump at 5 minutes. The thread method works under xdist and on tests that hold a container.
+timeout = 300
+timeout_method = "thread"
 markers = [
     "integration: needs containers started through dsy_itest",
     "e2e: needs the running cluster, run by scripts/e2e.sh and deselected by scripts/test.sh",
