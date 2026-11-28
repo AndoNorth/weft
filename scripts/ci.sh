@@ -26,8 +26,10 @@ case "${1:-}" in
         mapfile -t args <<<"$out"
         [ -n "${args[0]}" ] || args=()
         echo "== ci shard: $2"
-        scripts/test.sh "${args[@]}"
-        scripts/itest.sh -- "${args[@]}"
+        # The reports go under .pytest_cache, which git already ignores, one file per pytest call.
+        report=".pytest_cache/junit-$2"
+        scripts/test.sh --junitxml="$report-unit.xml" --durations=30 "${args[@]}"
+        scripts/itest.sh -- --junitxml="$report-integration.xml" --durations=30 "${args[@]}"
         exit ;;
     "") mode=$(changed | scripts/ci-paths.sh) ;;
     *) echo "usage: ci.sh [--docs | --full | --checks | --shard <name>]" >&2; exit 2 ;;
