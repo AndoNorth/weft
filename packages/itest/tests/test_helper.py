@@ -182,3 +182,31 @@ def test_exec_runs_in_the_labelled_container(t1):
         with pytest.raises(Exception, match="exited 3"):
             c.exec("sh", "-c", "exit 3")
         assert run_ids(t1.run_id) == [c.id[:12]]
+
+
+def test_killing_the_owner_leaves_no_container(tmp_path):
+    run_id = f"itest-child-sigkill-{os.getpid()}"
+    env = {**os.environ, "DSY_RUN_ID": run_id, "DSY_T1_LOCK_DIR": str(tmp_path)}
+    child = subprocess.Popen(
+        [sys.executable, "-m", "pytest", str(CHILD), "-q", "-p", "no:cacheprovider"],
+        env=env,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+    )
+    try:
+        deadline = time.monotonic() + 180
+        while not run_ids(run_id):
+            assert child.poll() is None, child.stdout.read()
+            assert time.monotonic() < deadline, "the child never started its container"
+            time.sleep(0.5)
+        child.kill()
+        child.wait(timeout=60)
+        deadline = time.monotonic() + 30
+        while run_ids(run_id) and time.monotonic() < deadline:
+            time.sleep(0.5)
+        assert run_ids(run_id) == []
+    finally:
+        leftover = run_ids(run_id)
+        if leftover:
+            subprocess.run(["docker", "rm", "-f", *leftover], capture_output=True)

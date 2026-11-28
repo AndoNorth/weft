@@ -158,6 +158,22 @@ def _acquire_lock(run_id: str, timeout: float, poll: float = 0.5) -> int:
     return fd
 
 
+def _watch_owner(run_id: str) -> None:
+    """Detached watcher that removes the run's containers when its owner dies, even by SIGKILL."""
+    script = (
+        f"while kill -0 {os.getpid()} 2>/dev/null; do sleep 1; done; "
+        f"ids=$(docker ps -aq --filter label={RUN_LABEL}={run_id}); "
+        '[ -z "$ids" ] || docker rm -f -v $ids >/dev/null 2>&1'
+    )
+    subprocess.Popen(
+        ["sh", "-c", script],
+        start_new_session=True,
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
+
 def _docker(*args: str, timeout: float = 300) -> str:
     try:
         run = subprocess.run(["docker", *args], capture_output=True, text=True, timeout=timeout)
@@ -247,6 +263,7 @@ class Session:
         except ContainerError as exc:
             raise DockerUnavailable(f"the docker daemon is unreachable: {exc}") from None
         self._fds = _acquire_locks(self.run_id, self.containers, self.timeout)
+        _watch_owner(self.run_id)
         Session._open = self
         atexit.register(self.close)
         try:
