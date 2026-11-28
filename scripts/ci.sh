@@ -45,6 +45,8 @@ echo "== ci-paths"
 scripts/ci-paths.test.sh
 echo "== ci-shards"
 scripts/ci-shards.test.sh
+echo "== tiers"
+scripts/tiers.test.sh
 echo "== doctor"
 scripts/doctor.test.sh
 echo "== check-dev-ports"

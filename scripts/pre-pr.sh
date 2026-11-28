@@ -19,6 +19,9 @@ plan=$({ git diff --name-only --no-renames "$base"; git ls-files --others --excl
 read -ra itest <<<"$(sed -n 's/^itest *//p' <<<"$plan")"
 read -ra unit <<<"$(sed -n 's/^unit *//p' <<<"$plan")"
 
+# shellcheck source=scripts/lib/tiers.sh
+source "$(dirname "$0")/lib/tiers.sh"
+
 pytest() {
     local rc=0
     uv run --frozen pytest "$@" || rc=$?
@@ -28,6 +31,8 @@ pytest() {
 
 scripts/ci.sh --docs
 echo "== unit tests: ${unit[*]:-none}"
-[ "${#unit[@]}" -eq 0 ] || pytest -n auto --dist worksteal -m "not integration and not slow" "${unit[@]}"
+tier_args unit
+[ "${#unit[@]}" -eq 0 ] || pytest -n auto --dist worksteal "${tier_pytest_args[@]}" "${unit[@]}"
 echo "== integration tests: ${itest[*]:-none}"
-[ "${#itest[@]}" -eq 0 ] || pytest -m integration "${itest[@]}"
+tier_args integration
+[ "${#itest[@]}" -eq 0 ] || pytest "${tier_pytest_args[@]}" "${itest[@]}"
