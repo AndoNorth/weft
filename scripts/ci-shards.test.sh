@@ -70,6 +70,13 @@ grep -q 'rest also runs acceptance admission scripts/$' "$junit/err" || fail "re
 "$shards" --suggest "$junit/nothing" >/dev/null 2>&1 && fail "--suggest accepted a missing directory"
 ok "--suggest balances measured durations over the shard names"
 
+# The scripts/cluster tests are skipped by the conftest of packages/obs, so the two share a shard however heavy.
+report unit.xml 10 packages.obs=60 scripts=1 packages.broker=30 packages.workflow=30
+report integration.xml 10 packages.admission=30
+layout=$("$shards" --suggest "$junit" 2>/dev/null)
+[ "$(grep -cE 'obs.*scripts/' <<<"$layout")" -eq 1 ] || fail "obs and scripts/ are not in one shard: $layout"
+ok "--suggest keeps packages/obs and scripts/ in one shard"
+
 rejects() {
     local why=$1 rc=0
     shift

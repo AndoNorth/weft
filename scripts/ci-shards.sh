@@ -12,10 +12,10 @@ cd "$(dirname "$0")/.."
 # missing from this list is still tested. Adding a line adds a runner.
 shards=${CI_SHARDS:-"
 workflow: workflow
-admission: admission itest jobcheck stages stateops temporal workloads
-dispatchapi: artifactreaper clusterkit compile dispatchapi events jobexamples keys placement
-worker: artifactindex broker eventstore jobstate servicekit scripts/
-artifacts: deploy/ acceptance aggregate compat jobdoc jobpatch kernel plan worker
+admission: admission itest jobtools stateops temporal workloads
+dispatchapi: artifactreaper compile dispatchapi events exampleflow keys placement servicekit
+worker: deploy/ aggregate broker clusterkit eventstore jobcheck jobexamples jobpatch migrate
+artifacts: compat jobdoc jobstate kernel obs plan runtime worker scripts/
 rest:
 "}
 
@@ -65,11 +65,19 @@ named = {p: w for p, w in weight.items() if os.path.exists(p)}
 loads = [0.0] * len(names)
 loads[-1] = sum(weight.values()) - sum(named.values())
 bins = [[] for _ in names]
+# scripts/cluster tests read a running stack and are skipped only by the conftest of packages/obs, which pytest applies
+# to the whole session, so the two must be selected by the same shard.
+together = [("scripts", "packages/obs")]
+units = {p: [p] for p in named}
+for first, second in together:
+    if first in units and second in units:
+        units[first] += units.pop(second)
+cost = {k: sum(named[p] for p in v) for k, v in units.items()}
 # Longest first into the least loaded shard. The last shard names nothing, so the paths it receives are not printed.
-for path, w in sorted(named.items(), key=lambda kv: -kv[1]):
+for key, w in sorted(cost.items(), key=lambda kv: -kv[1]):
     i = loads.index(min(loads))
     loads[i] += w
-    bins[i].append(path)
+    bins[i] += units[key]
 
 def word(path):
     return path[len("packages/"):] if path.startswith("packages/") else path + "/"
