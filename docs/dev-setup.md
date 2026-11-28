@@ -226,18 +226,9 @@ A `core.hooksPath` set in a git config file is never overwritten.
 The shell then installs nothing and `hooks-status` reports it.
 A checkout that never entered the shell has no linked config, so its shims do nothing and never block a commit.
 
-## Version pins
+## Pinned versions
 
-| Pin | File | Bump |
-| --- | --- | --- |
-| Shell tools | `flake.lock` | `nix flake update`, then review the `just versions` diff |
-| `wasmtime`, `wasm-tools` | `nix/wasm-tools.nix` | edit `version`, `url` and `hash` for that tool |
-| Python dependencies | `uv.lock` | `uv lock --upgrade-package <name>` |
-| kind node image, charts, images | `deploy/versions.yaml` | one edit setting both `version` and `digest` |
-
-`just versions` prints the tool versions from the shell, then the file's entries, one key per line.
-`just versions --check` validates `deploy/versions.yaml` against `contracts/versions.schema.json` and exits 1 on a missing digest.
-The full policy, including the preference for first-party charts, is in [versions-policy.md](versions-policy.md).
+Each pin, the file that holds it and how to bump it are in [versions-policy.md](versions-policy.md#where-each-pin-lives).
 
 ## CI
 
