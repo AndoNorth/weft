@@ -2,11 +2,11 @@
 
 import json
 import subprocess
-import sys
 from pathlib import Path
 
 import pytest
 from dsy_events.profile import CONTRACT_DIR
+from dsy_itest.wheels import clean_venv
 
 ROOT = CONTRACT_DIR.parents[1]
 ACCEPTED = json.loads((CONTRACT_DIR / "vectors/accepted/valid/accepted.json").read_text())
@@ -29,23 +29,9 @@ assert kinds == set(layout()["kinds"])
 """
 
 
-def run(*cmd, **kwargs) -> subprocess.CompletedProcess:
-    result = subprocess.run(cmd, capture_output=True, text=True, **kwargs)
-    assert result.returncode == 0, f"{cmd}: {result.stdout}{result.stderr}"
-    return result
-
-
 @pytest.fixture(scope="module")
 def clean_python(tmp_path_factory) -> Path:
-    work = tmp_path_factory.mktemp("wheel")
-    wheels = work / "wheels"
-    for package in ("dsy-events", "dsy-keys"):
-        run("uv", "build", "--wheel", "--package", package, "-o", str(wheels), cwd=ROOT)
-    venv = work / "venv"
-    run("uv", "venv", "--python", sys.executable, str(venv))
-    python = venv / "bin/python"
-    run("uv", "pip", "install", "--python", str(python), *map(str, wheels.glob("*.whl")))
-    return python
+    return clean_venv(tmp_path_factory, ("dsy-events", "dsy-keys"))
 
 
 def test_a_wheel_in_a_clean_venv_reads_writes_and_counts(clean_python, tmp_path):
