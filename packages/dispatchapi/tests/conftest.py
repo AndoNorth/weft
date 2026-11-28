@@ -2,7 +2,7 @@
 
 Every container is held for one test module, so a module that holds two declares `pair` and no
 session ever holds a third: Postgres comes from `appdb` of dsy_migrate with its `db` and `login`,
-SeaweedFS from `shelf` and the Temporal dev server from `temporal`. The database
+SeaweedFS from `shelf` of dsy_storecheck and the Temporal dev server from `temporal`. The database
 logins are fresh members of the four group roles the service logs in through, the broker is
 dsy_broker's own FakeBroker, and Temporal at T0 is FakeGateway.
 """
@@ -13,7 +13,6 @@ import pytest
 from dsy_broker.tenancy import load
 from dsy_broker.testing import FakeBroker
 from dsy_dispatchapi.testing import FakeGateway
-from dsy_storecheck.fixtures import running
 from dsy_workflow.testing.server import dev_server
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -37,17 +36,6 @@ def root() -> Path:
 def logins(login) -> dict[str, str]:
     """The DSN of a fresh login in each group role of GROUPS, by its key."""
     return {key: login(group) for key, group in GROUPS.items()}
-
-
-@pytest.fixture(scope="module")
-def shelf(t1, tmp_path_factory):
-    """A SeaweedFS with the buckets and grants of the store contract, held for one test module.
-
-    The session-wide `shelf` of dsy_storecheck is not used: it stays up for the whole session, so
-    a module holding Postgres and the dev server would make a third container."""
-    with running(t1, "seaweedfs", tmp_path_factory.mktemp("shelf")) as started:
-        started.store().create_buckets()
-        yield started
 
 
 @pytest.fixture(scope="module")

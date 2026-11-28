@@ -1,4 +1,4 @@
-"""`shelf` is the session's store with every contract bucket created."""
+"""`shelf` is a store with every contract bucket created."""
 
 import pytest
 from dsy_storecheck.contract import buckets
