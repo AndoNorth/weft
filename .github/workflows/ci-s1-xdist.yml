@@ -1,0 +1,69 @@
+name: ci-s1-xdist
+
+# A spike, run by hand: the integration tier of one shard at -n0 and under two xdist workers, on hosted runners.
+# It is not a required check and nothing else depends on it.
+on:
+  push:
+    branches: [fm/wft-ci-s1]
+    paths: [.github/workflows/ci-s1-xdist.yml]
+  workflow_dispatch:
+    inputs:
+      shard:
+        description: Shard of scripts/ci-shards.sh to run
+        default: artifacts
+      runs:
+        description: Runs per variant
+        default: "5"
+
+permissions:
+  contents: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      runs: ${{ steps.plan.outputs.runs }}
+    steps:
+      - id: plan
+        env:
+          RUNS: ${{ inputs.runs || '5' }}
+        run: echo "runs=[$(seq -s, 1 "$RUNS")]" | tee -a "$GITHUB_OUTPUT"
+
+  measure:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [n0, n2, n2split]
+        run: ${{ fromJSON(needs.plan.outputs.runs) }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: DeterminateSystems/nix-installer-action@v23
+      - name: Restore the build download cache
+        uses: actions/cache/restore@v6
+        with:
+          path: ~/.cache/disyard/build
+          key: build-downloads-${{ hashFiles('uv.lock', 'nix/wasm-tools.nix', 'deploy/versions.yaml') }}
+          restore-keys: build-downloads-
+      - name: Restore the uv cache
+        uses: actions/cache/restore@v6
+        with:
+          path: ~/.cache/uv
+          key: uv-test-${{ hashFiles('uv.lock') }}
+          restore-keys: uv-test-
+      - name: Run the variant
+        env:
+          SHARD: ${{ inputs.shard || 'artifacts' }}
+        run: |
+          nix develop -c docs/delivery/spikes/S8/code/xdist-integration.sh \
+            ${{ matrix.variant }} "$SHARD" "$RUNNER_TEMP/out"
+      - name: Upload the reports
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: xdist-${{ matrix.variant }}-${{ matrix.run }}
+          path: ${{ runner.temp }}/out
+          retention-days: 30
