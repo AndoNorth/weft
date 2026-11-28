@@ -11,7 +11,6 @@ dependencies = [
     "dsy-artifactclient",
     "dsy-artifactindex",
     "dsy-artifactreaper",
-    "dsy-compat",
     "dsy-compile",
     "dsy-events",
     "dsy-eventstore",
@@ -31,27 +30,6 @@ dependencies = [
 # The drivers of a deployed cluster, which no image runs.
 [project.optional-dependencies]
 cluster = ["dsy-clusterkit"]
-
-[tool.uv.sources]
-dsy-artifactclient = { workspace = true }
-dsy-artifactindex = { workspace = true }
-dsy-artifactreaper = { workspace = true }
-dsy-clusterkit = { workspace = true }
-dsy-compat = { workspace = true }
-dsy-compile = { workspace = true }
-dsy-events = { workspace = true }
-dsy-eventstore = { workspace = true }
-dsy-itest = { workspace = true }
-dsy-jobdoc = { workspace = true }
-dsy-jobpatch = { workspace = true }
-dsy-jobstate = { workspace = true }
-dsy-keys = { workspace = true }
-dsy-obs = { workspace = true }
-dsy-plan = { workspace = true }
-dsy-runtime = { workspace = true }
-dsy-servicekit = { workspace = true }
-dsy-stages = { workspace = true }
-dsy-temporal = { workspace = true }
 
 [build-system]
 requires = ["hatchling"]

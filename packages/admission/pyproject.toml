@@ -5,7 +5,6 @@ license = "Apache-2.0"
 requires-python = ">=3.13,<3.14"
 dependencies = [
     "psycopg[binary]",
-    "pydantic",
     "temporalio",
     "dsy-broker",
     "dsy-compat",
@@ -23,20 +22,6 @@ dependencies = [
 # The drivers of a deployed cluster, which no image runs.
 [project.optional-dependencies]
 cluster = ["dsy-clusterkit"]
-
-[tool.uv.sources]
-dsy-broker = { workspace = true }
-dsy-clusterkit = { workspace = true }
-dsy-compat = { workspace = true }
-dsy-events = { workspace = true }
-dsy-eventstore = { workspace = true }
-dsy-jobstate = { workspace = true }
-dsy-keys = { workspace = true }
-dsy-obs = { workspace = true }
-dsy-servicekit = { workspace = true }
-dsy-stages = { workspace = true }
-dsy-temporal = { workspace = true }
-dsy-workflow = { workspace = true }
 
 [build-system]
 requires = ["hatchling"]

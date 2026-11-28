@@ -20,19 +20,6 @@ dependencies = [
     "dsy-workloads",
 ]
 
-[tool.uv.sources]
-dsy-broker = { workspace = true }
-dsy-clusterkit = { workspace = true }
-dsy-eventstore = { workspace = true }
-dsy-jobstate = { workspace = true }
-dsy-kernel = { workspace = true }
-dsy-keys = { workspace = true }
-dsy-storecheck = { workspace = true }
-dsy-temporal = { workspace = true }
-dsy-obs = { workspace = true }
-dsy-workflow = { workspace = true }
-dsy-workloads = { workspace = true }
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

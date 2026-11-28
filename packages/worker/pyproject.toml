@@ -21,19 +21,6 @@ compile = ["uv==0.11.21", "dsy-compile"]
 simulate = ["dsy-runtime"]
 aggregate = ["dsy-aggregate"]
 
-[tool.uv.sources]
-dsy-aggregate = { workspace = true }
-dsy-artifactclient = { workspace = true }
-dsy-compile = { workspace = true }
-dsy-events = { workspace = true }
-dsy-keys = { workspace = true }
-dsy-obs = { workspace = true }
-dsy-runtime = { workspace = true }
-dsy-servicekit = { workspace = true }
-dsy-stages = { workspace = true }
-dsy-temporal = { workspace = true }
-dsy-workflow = { workspace = true }
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

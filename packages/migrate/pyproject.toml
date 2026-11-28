@@ -3,13 +3,10 @@ name = "dsy-migrate"
 version = "0.0.0"
 license = "Apache-2.0"
 requires-python = ">=3.13,<3.14"
-dependencies = ["psycopg[binary]", "pytest", "dsy-itest"]
+dependencies = ["psycopg[binary]", "pytest"]
 
 [project.entry-points.pytest11]
 dsy_migrate = "dsy_migrate.fixtures"
-
-[tool.uv.sources]
-dsy-itest = { workspace = true }
 
 [build-system]
 requires = ["hatchling"]

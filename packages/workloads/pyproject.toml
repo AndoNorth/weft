@@ -6,9 +6,6 @@ requires-python = ">=3.13"
 # Runs inside a guest too, so the only dependency is the standard library kernel.
 dependencies = ["dsy-kernel"]
 
-[tool.uv.sources]
-dsy-kernel = { workspace = true }
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

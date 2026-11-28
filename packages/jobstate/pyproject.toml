@@ -3,13 +3,10 @@ name = "dsy-jobstate"
 version = "0.0.0"
 license = "Apache-2.0"
 requires-python = ">=3.13,<3.14"
-dependencies = ["psycopg[binary]", "pydantic", "pyyaml", "dsy-events"]
+dependencies = ["psycopg[binary]", "pydantic", "pyyaml"]
 
 [project.entry-points."dsy.migrations"]
 jobstate = "dsy_jobstate.migrations"
-
-[tool.uv.sources]
-dsy-events = { workspace = true }
 
 [build-system]
 requires = ["hatchling"]

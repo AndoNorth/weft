@@ -5,10 +5,6 @@ license = "Apache-2.0"
 requires-python = ">=3.13,<3.14"
 dependencies = ["dsy-events", "dsy-keys", "jsonschema", "pyyaml"]
 
-[tool.uv.sources]
-dsy-events = { workspace = true }
-dsy-keys = { workspace = true }
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

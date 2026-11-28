@@ -9,11 +9,6 @@ dependencies = [
     "dsy-workflow",
 ]
 
-[tool.uv.sources]
-dsy-obs = { workspace = true }
-dsy-servicekit = { workspace = true }
-dsy-workflow = { workspace = true }
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

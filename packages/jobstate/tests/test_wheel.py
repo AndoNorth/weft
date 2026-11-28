@@ -36,7 +36,7 @@ def run(*cmd, **kwargs) -> subprocess.CompletedProcess:
 def clean_python(tmp_path_factory) -> Path:
     work = tmp_path_factory.mktemp("wheel")
     wheels = work / "wheels"
-    for package in ("dsy-jobstate", "dsy-events", "dsy-keys"):
+    for package in ("dsy-jobstate", "dsy-keys"):
         run("uv", "build", "--wheel", "--package", package, "-o", str(wheels), cwd=ROOT)
     venv = work / "venv"
     run("uv", "venv", "--python", sys.executable, str(venv))
