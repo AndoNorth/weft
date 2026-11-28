@@ -18,14 +18,6 @@ dependencies = [
 [project.entry-points."dsy.migrations"]
 stateops = "dsy_stateops.migrations"
 
-[tool.uv.sources]
-dsy-events = { workspace = true }
-dsy-eventstore = { workspace = true }
-dsy-jobstate = { workspace = true }
-dsy-keys = { workspace = true }
-dsy-migrate = { workspace = true }
-dsy-storecheck = { workspace = true }
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

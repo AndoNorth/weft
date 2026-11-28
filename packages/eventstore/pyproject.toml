@@ -8,10 +8,6 @@ dependencies = ["pydantic", "pyyaml", "dsy-compat", "dsy-events"]
 [project.entry-points."dsy.migrations"]
 eventstore = "dsy_eventstore.migrations"
 
-[tool.uv.sources]
-dsy-compat = { workspace = true }
-dsy-events = { workspace = true }
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

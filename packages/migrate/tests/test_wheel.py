@@ -27,7 +27,6 @@ def clean_python(tmp_path_factory) -> Path:
     wheels = work / "wheels"
     run("uv", "build", "--wheel", "--package", "dsy-migrate", "-o", str(wheels), cwd=ROOT)
     run("uv", "build", "--wheel", str(FIXTURE), "-o", str(wheels), cwd=work)
-    run("uv", "build", "--wheel", "--package", "dsy-itest", "-o", str(wheels), cwd=ROOT)
     venv = work / "venv"
     run("uv", "venv", "--python", sys.executable, str(venv))
     python = venv / "bin/python"

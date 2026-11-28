@@ -14,10 +14,10 @@ def workspace(tmp_path):
     """Members a <- b <- c, where c depends on b and b on a, and an unrelated d."""
     deps = {"a": [], "b": ["a"], "c": ["b"], "d": []}
     for folder, needs in deps.items():
-        sources = "".join(f"dsy-{n} = {{ workspace = true }}\n" for n in needs)
+        requires = "".join(f', "dsy-{n}>=0"' for n in needs)
         (tmp_path / "packages" / folder).mkdir(parents=True)
         (tmp_path / "packages" / folder / "pyproject.toml").write_text(
-            f'[project]\nname = "dsy-{folder}"\n\n[tool.uv.sources]\n{sources}'
+            f'[project]\nname = "dsy-{folder}"\ndependencies = ["pyyaml"{requires}]\n'
         )
     return tmp_path
 

@@ -8,9 +8,6 @@ dependencies = ["psycopg[binary]", "pydantic", "pyyaml", "dsy-events"]
 [project.entry-points."dsy.migrations"]
 artifactindex = "dsy_artifactindex.migrations"
 
-[tool.uv.sources]
-dsy-events = { workspace = true }
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

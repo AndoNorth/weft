@@ -18,11 +18,6 @@ dependencies = [
 [project.optional-dependencies]
 stateops = ["dsy-stateops"]
 
-[tool.uv.sources]
-dsy-events = { workspace = true }
-dsy-servicekit = { workspace = true }
-dsy-stateops = { workspace = true }
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

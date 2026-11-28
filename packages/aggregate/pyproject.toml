@@ -11,11 +11,6 @@ dependencies = [
     "dsy-storecheck",
 ]
 
-[tool.uv.sources]
-dsy-artifactclient = { workspace = true }
-dsy-kernel = { workspace = true }
-dsy-storecheck = { workspace = true }
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

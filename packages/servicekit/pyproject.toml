@@ -6,8 +6,6 @@ requires-python = ">=3.13,<3.14"
 dependencies = ["psycopg"]
 
 # A leaf: it must not depend on another workspace package.
-[tool.uv.sources]
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

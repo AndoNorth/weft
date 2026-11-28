@@ -5,12 +5,6 @@ license = "Apache-2.0"
 requires-python = ">=3.13,<3.14"
 dependencies = ["opentelemetry-api", "opentelemetry-sdk", "pyyaml", "temporalio", "dsy-events", "dsy-itest", "dsy-keys", "dsy-servicekit"]
 
-[tool.uv.sources]
-dsy-events = { workspace = true }
-dsy-itest = { workspace = true }
-dsy-keys = { workspace = true }
-dsy-servicekit = { workspace = true }
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

@@ -4,7 +4,6 @@ version = "0.0.0"
 license = "Apache-2.0"
 requires-python = ">=3.13,<3.14"
 dependencies = [
-    "boto3",
     "psycopg[binary]",
     "pydantic",
     "pyyaml",
@@ -31,26 +30,6 @@ dependencies = [
 # The drivers of a deployed cluster, which no image runs.
 [project.optional-dependencies]
 cluster = ["dsy-acceptance", "dsy-clusterkit"]
-
-[tool.uv.sources]
-dsy-artifactclient = { workspace = true }
-dsy-artifactindex = { workspace = true }
-dsy-broker = { workspace = true }
-dsy-clusterkit = { workspace = true }
-dsy-compile = { workspace = true }
-dsy-events = { workspace = true }
-dsy-eventstore = { workspace = true }
-dsy-itest = { workspace = true }
-dsy-jobcheck = { workspace = true }
-dsy-jobpatch = { workspace = true }
-dsy-jobstate = { workspace = true }
-dsy-keys = { workspace = true }
-dsy-obs = { workspace = true }
-dsy-plan = { workspace = true }
-dsy-servicekit = { workspace = true }
-dsy-stages = { workspace = true }
-dsy-temporal = { workspace = true }
-dsy-workflow = { workspace = true }
 
 [build-system]
 requires = ["hatchling"]

@@ -5,9 +5,6 @@ license = "Apache-2.0"
 requires-python = ">=3.13,<3.14"
 dependencies = ["pydantic", "jsonschema", "pyyaml", "dsy-keys", "psycopg[binary]"]
 
-[tool.uv.sources]
-dsy-keys = { workspace = true }
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

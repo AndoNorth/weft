@@ -5,10 +5,6 @@ license = "Apache-2.0"
 requires-python = ">=3.13,<3.14"
 dependencies = ["dsy-servicekit", "dsy-storecheck"]
 
-[tool.uv.sources]
-dsy-servicekit = { workspace = true }
-dsy-storecheck = { workspace = true }
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

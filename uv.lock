@@ -345,7 +345,6 @@ dependencies = [
     { name = "dsy-temporal" },
     { name = "dsy-workflow" },
     { name = "psycopg", extra = ["binary"] },
-    { name = "pydantic" },
     { name = "temporalio" },
 ]
 
@@ -369,7 +368,6 @@ requires-dist = [
     { name = "dsy-temporal", editable = "packages/temporal" },
     { name = "dsy-workflow", editable = "packages/workflow" },
     { name = "psycopg", extras = ["binary"] },
-    { name = "pydantic" },
     { name = "temporalio" },
 ]
 provides-extras = ["cluster"]
@@ -543,7 +541,6 @@ name = "dsy-dispatchapi"
 version = "0.0.0"
 source = { editable = "packages/dispatchapi" }
 dependencies = [
-    { name = "boto3" },
     { name = "dsy-artifactclient" },
     { name = "dsy-artifactindex" },
     { name = "dsy-broker" },
@@ -575,7 +572,6 @@ cluster = [
 
 [package.metadata]
 requires-dist = [
-    { name = "boto3" },
     { name = "dsy-acceptance", marker = "extra == 'cluster'", editable = "packages/acceptance" },
     { name = "dsy-artifactclient", editable = "packages/artifactclient" },
     { name = "dsy-artifactindex", editable = "packages/artifactindex" },
@@ -741,7 +737,6 @@ name = "dsy-jobstate"
 version = "0.0.0"
 source = { editable = "packages/jobstate" }
 dependencies = [
-    { name = "dsy-events" },
     { name = "psycopg", extra = ["binary"] },
     { name = "pydantic" },
     { name = "pyyaml" },
@@ -749,7 +744,6 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "dsy-events", editable = "packages/events" },
     { name = "psycopg", extras = ["binary"] },
     { name = "pydantic" },
     { name = "pyyaml" },
@@ -791,14 +785,12 @@ name = "dsy-migrate"
 version = "0.0.0"
 source = { editable = "packages/migrate" }
 dependencies = [
-    { name = "dsy-itest" },
     { name = "psycopg", extra = ["binary"] },
     { name = "pytest" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "dsy-itest", editable = "packages/itest" },
     { name = "psycopg", extras = ["binary"] },
     { name = "pytest" },
 ]
@@ -1043,7 +1035,6 @@ dependencies = [
     { name = "dsy-artifactclient" },
     { name = "dsy-artifactindex" },
     { name = "dsy-artifactreaper" },
-    { name = "dsy-compat" },
     { name = "dsy-compile" },
     { name = "dsy-events" },
     { name = "dsy-eventstore" },
@@ -1075,7 +1066,6 @@ requires-dist = [
     { name = "dsy-artifactindex", editable = "packages/artifactindex" },
     { name = "dsy-artifactreaper", editable = "packages/artifactreaper" },
     { name = "dsy-clusterkit", marker = "extra == 'cluster'", editable = "packages/clusterkit" },
-    { name = "dsy-compat", editable = "packages/compat" },
     { name = "dsy-compile", editable = "packages/compile" },
     { name = "dsy-events", editable = "packages/events" },
     { name = "dsy-eventstore", editable = "packages/eventstore" },

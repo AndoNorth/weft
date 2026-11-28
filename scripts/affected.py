@@ -7,6 +7,7 @@ Any other path can reach tests that no package owns, so the script prints `full 
 Usage: affected.py [workspace root], which defaults to this repository.
 """
 
+import re
 import subprocess
 import sys
 import tomllib
@@ -25,8 +26,8 @@ def members(root):
     projects = {}
     for pyproject in sorted((root / "packages").glob("*/pyproject.toml")):
         data = tomllib.loads(pyproject.read_text())
-        sources = data.get("tool", {}).get("uv", {}).get("sources", {})
-        deps = {name for name, source in sources.items() if source.get("workspace")}
+        requirements = data["project"].get("dependencies", [])
+        deps = {re.match(r"[A-Za-z0-9._-]+", req).group() for req in requirements}
         projects[data["project"]["name"]] = (pyproject.parent.name, deps)
     return {
         folder: {projects[d][0] for d in deps if d in projects}

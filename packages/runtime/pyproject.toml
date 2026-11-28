@@ -5,11 +5,6 @@ license = "Apache-2.0"
 requires-python = ">=3.13,<3.14"
 dependencies = ["pydantic", "pyyaml", "dsy-jobdoc", "dsy-kernel", "dsy-keys"]
 
-[tool.uv.sources]
-dsy-jobdoc = { workspace = true }
-dsy-kernel = { workspace = true }
-dsy-keys = { workspace = true }
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

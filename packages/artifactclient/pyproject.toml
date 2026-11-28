@@ -17,12 +17,6 @@ dependencies = [
 [project.entry-points.pytest11]
 dsy_artifactclient = "dsy_artifactclient.testing"
 
-[tool.uv.sources]
-dsy-artifactindex = { workspace = true }
-dsy-compat = { workspace = true }
-dsy-events = { workspace = true }
-dsy-storecheck = { workspace = true }
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
