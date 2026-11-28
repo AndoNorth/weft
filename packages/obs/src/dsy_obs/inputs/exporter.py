@@ -82,6 +82,11 @@ class Exporter:
         for name, value in values:
             labelled = LABELLED.fullmatch(name)
             labels = {labelled["label"]: labelled["value"]} if labelled else None
+            if value < 0:
+                # A Temporal gauge rejects a negative value, which would end the process.
+                self.errors[item.name] += 1
+                log.error("state input %s: %s is negative (%s), skipped", item.name, name, value)
+                continue
             self._gauges[item.name].set(float(value), labels)
 
     def _failed(self, item: "Input", error: Exception) -> None:
