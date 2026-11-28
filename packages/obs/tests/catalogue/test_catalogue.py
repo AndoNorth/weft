@@ -101,8 +101,9 @@ def test_absent_lists_the_entries_with_no_sample(fake):
 
 @pytest.mark.cluster
 def test_every_catalogue_entry_is_in_prometheus():
+    # Selected on purpose, so a missing URL fails and does not pass by skipping.
     if not (url := os.environ.get("DSY_OBS_PROMETHEUS_URL")):
-        pytest.skip("DSY_OBS_PROMETHEUS_URL is not set")
+        pytest.fail("DSY_OBS_PROMETHEUS_URL is not set, point it at a forward of svc/prometheus")
     # A series written just before the check appears after the next scrape.
     deadline = time.monotonic() + SCRAPE_WAIT_S
     while (missing := catalogue.absent(url, CATALOGUE)) and time.monotonic() < deadline:
