@@ -83,8 +83,8 @@ async def serve(config: Config, stop: asyncio.Event | None = None) -> None:
 async def _run_until(worker: Worker, stop: asyncio.Event, ready: ReadyFile) -> None:
     running = asyncio.create_task(worker.run())
     stopped = asyncio.create_task(stop.wait())
-    ready.set()
     try:
+        ready.set()
         await asyncio.wait([running, stopped], return_when=asyncio.FIRST_COMPLETED)
     finally:
         ready.clear()
