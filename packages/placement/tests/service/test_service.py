@@ -192,3 +192,21 @@ def test_ready_after_listen(ci_api, spawn, tmp_path, until):
         f"listening address={url} snapshot_every_s=30.0",
         "snapshot first_read=true ready_workers=compile:1,simulate:1,aggregate:1",
     ]
+
+
+def test_ready_file_is_cleared_when_the_stop_lands_right_after_it_is_set(
+    api, account, tmp_path, monkeypatch
+):
+    class Interrupted(service.ReadyFile):
+        def set(self):
+            super().set()
+            raise SystemExit(0)
+
+    monkeypatch.setattr(service, "ReadyFile", Interrupted)
+    snapshotter = service.kube.Snapshotter(
+        service.kube.Reader(api.url, str(account / "token"), str(account / "ca.crt")), 60
+    )
+    served = service.Service(("127.0.0.1", 0), snapshotter)
+    with pytest.raises(SystemExit):
+        served.serve(tmp_path / "ready")
+    assert not (tmp_path / "ready").exists()

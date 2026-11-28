@@ -347,8 +347,8 @@ async def _run(
         metrics.gauge("dsy_admission_breaker_open", intake.breakers.gauge(), "dependency")
 
     stopped = asyncio.create_task(stop.wait())
-    ready.set()
     try:
+        ready.set()
         while True:
             # No message is held between cycles, so only the cycle in progress can hold one.
             held.clear()

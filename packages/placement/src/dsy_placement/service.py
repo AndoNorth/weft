@@ -182,8 +182,9 @@ class Service:
     def serve(self, ready_file: Path | None = None) -> None:
         """Serves until `stop()`, with `ready_file` present while it does."""
         ready = ReadyFile(ready_file)
-        ready.set()
         try:
+            # Inside the try: SIGTERM raises SystemExit and may land right after the set.
+            ready.set()
             self.server.serve_forever()
         finally:
             ready.clear()

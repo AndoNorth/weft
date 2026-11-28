@@ -277,8 +277,8 @@ async def _run_with_modules(
 async def _run_until(workers: list[Worker], stop: asyncio.Event, ready: ReadyFile) -> None:
     runs = [asyncio.create_task(worker.run()) for worker in workers]
     stopped = asyncio.create_task(stop.wait())
-    ready.set()
     try:
+        ready.set()
         await asyncio.wait([*runs, stopped], return_when=asyncio.FIRST_COMPLETED)
     finally:
         ready.clear()
