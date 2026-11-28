@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Self-test for ci-shards.sh: every package, deploy/ and scripts/ is tested by exactly one shard, a package that no
-# shard names lands in the last one, and a malformed shard list fails.
+# shard names lands in the last one, --suggest balances measured durations, and a malformed shard list fails.
 set -euo pipefail
 
 here=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
@@ -50,6 +50,32 @@ ok "a package no shard names runs in the last shard"
 [ "$("$shards" rest)" = $'--ignore=packages/broker\n--ignore=packages/workflow\n--ignore=scripts' ] ||
     fail "shard rest: got $("$shards" rest)"
 ok "names and arguments"
+
+# A unit report whose per-test times add up to twice its wall time, as under xdist, and a serial integration report.
+junit=$(mktemp -d)
+trap 'rm -rf "$junit"' EXIT
+report() {
+    local file=$1 wall=$2 cases=""
+    shift 2
+    for case in "$@"; do cases+="<testcase classname=\"${case%=*}.tests.test_x\" name=\"t\" time=\"${case#*=}\"/>"; done
+    echo "<testsuites><testsuite name=\"pytest\" time=\"$wall\">$cases</testsuite></testsuites>" >"$junit/$file"
+}
+report unit.xml 15 packages.workflow=20 packages.acceptance=10 packages.nosuchpackage=5
+report integration.xml 100 packages.broker=60 packages.broker=40 packages.admission=50 packages.workflow=50 scripts=1
+CI_SHARDS=$'a: broker\nb: workflow\nrest:'
+layout=$("$shards" --suggest "$junit" 2>"$junit/err")
+[ "$layout" = $'a: broker\nb: workflow\nrest:' ] || fail "layout: got $layout"
+grep -q '^predicted seconds: slowest 50, mean 38, ratio 1.' "$junit/err" || fail "prediction: got $(cat "$junit/err")"
+grep -q 'rest also runs acceptance admission scripts/$' "$junit/err" || fail "rest paths: got $(cat "$junit/err")"
+"$shards" --suggest "$junit/nothing" >/dev/null 2>&1 && fail "--suggest accepted a missing directory"
+ok "--suggest balances measured durations over the shard names"
+
+# The scripts/cluster tests are skipped by the conftest of packages/obs, so the two share a shard however heavy.
+report unit.xml 10 packages.obs=60 scripts=1 packages.broker=30 packages.workflow=30
+report integration.xml 10 packages.admission=30
+layout=$("$shards" --suggest "$junit" 2>/dev/null)
+[ "$(grep -cE 'obs.*scripts/' <<<"$layout")" -eq 1 ] || fail "obs and scripts/ are not in one shard: $layout"
+ok "--suggest keeps packages/obs and scripts/ in one shard"
 
 rejects() {
     local why=$1 rc=0
