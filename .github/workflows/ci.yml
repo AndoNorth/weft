@@ -90,6 +90,16 @@ jobs:
           key: uv-test-${{ hashFiles('uv.lock') }}
           restore-keys: uv-test-
       - run: nix develop -c just ci --shard ${{ matrix.shard }}
+      # The unit and integration reports of the shard, kept even when the shard fails.
+      - name: Upload the JUnit reports
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: junit-${{ matrix.shard }}
+          path: .pytest_cache/junit-${{ matrix.shard }}-*.xml
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 30
 
   check:
     needs: [changes, checks, test]
