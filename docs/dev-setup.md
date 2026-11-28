@@ -52,7 +52,7 @@ No logic lives in the justfile, and each real recipe calls `scripts/<name>.sh`.
 | `doctor [--json]` | real | - | host preflight, see below |
 | `versions [--check]` | real | - | prints tool versions and `deploy/versions.yaml`, `--check` validates the file against its schema |
 | `lint` | real | - | ruff, yamllint, shellcheck, actionlint, kubeconform and nixfmt over the files each owns |
-| `test` | real | - | `pytest -n auto --dist loadfile -m "not integration and not slow"`, one worker per core and whole test files per worker, so `scripts/test.sh -n0` runs serial, nothing collected counts as success |
+| `test` | real | - | `pytest -n auto --dist worksteal -m "not integration and not slow"`, one worker per core and idle workers steal queued tests, so `scripts/test.sh -n0` runs serial, nothing collected counts as success |
 | `itest [domain]` | real | - | `pytest -m integration`, optionally limited to `packages/<domain>` |
 | `contracts-map` | real | - | fails when a directory under `contracts/` has no row in the map of [contracts.md](contracts.md), or a row points at a missing path |
 | `ci` | real | - | `lint`, `check-links`, `contracts-map` and its self-test, the `ci-paths` and `ci-shards` self-tests, `verify-lint`, then `test` and `itest` unless only documentation changed, then `nix flake check` |

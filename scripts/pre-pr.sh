@@ -28,6 +28,6 @@ pytest() {
 
 scripts/ci.sh --docs
 echo "== unit tests: ${unit[*]:-none}"
-[ "${#unit[@]}" -eq 0 ] || pytest -n auto --dist loadfile -m "not integration and not slow" "${unit[@]}"
+[ "${#unit[@]}" -eq 0 ] || pytest -n auto --dist worksteal -m "not integration and not slow" "${unit[@]}"
 echo "== integration tests: ${itest[*]:-none}"
 [ "${#itest[@]}" -eq 0 ] || pytest -m integration "${itest[@]}"
