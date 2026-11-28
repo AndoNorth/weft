@@ -66,7 +66,7 @@ check() {
         held=1
         box=$(container_of "$port")
         echo "held: $name port $port, $(describe "$pid")"
-        [ -z "$box" ] || echo "  leftover dsy container $box, left running"
+        [ -z "$box" ] || echo "  leftover dsy container $box, left running, remove it with: docker rm -f -v $box"
     done < <(listeners "$lo" "$hi")
 }
 
