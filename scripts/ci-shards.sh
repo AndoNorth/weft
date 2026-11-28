@@ -12,10 +12,10 @@ cd "$(dirname "$0")/.."
 # missing from this list is still tested. Adding a line adds a runner.
 shards=${CI_SHARDS:-"
 workflow: workflow
-admission: admission itest jobtools stateops temporal workloads
-dispatchapi: artifactreaper compile dispatchapi events exampleflow keys placement servicekit
-worker: deploy/ aggregate broker clusterkit eventstore jobcheck jobexamples jobpatch migrate
-artifacts: compat jobdoc jobstate kernel obs plan runtime worker scripts/
+admission: admission compat jobdoc stages stateops workloads
+dispatchapi: artifactreaper compile dispatchapi events jobexamples kernel placement
+worker: deploy/ acceptance artifactindex broker clusterkit jobcheck jobpatch jobtools
+artifacts: eventstore exampleflow itest jobstate migrate servicekit storecheck worker
 rest:
 "}
 
