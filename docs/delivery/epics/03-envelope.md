@@ -1,6 +1,6 @@
 # Epic #4: Job event envelope (CloudEvents) and state propagation - breakdown
 
-Status: draft
+Status: closed 2026-10-31
 Epic: https://github.com/AndoNorth/disyard/issues/4
 Architecture note: docs/architecture/13-state-envelope-artifacts.drawio
 Depends on (closed epics): Dev environment (#1, closed)

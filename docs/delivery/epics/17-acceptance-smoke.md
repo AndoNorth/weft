@@ -1,6 +1,6 @@
 # Epic #17 pass 1: Smoke gate - breakdown
 
-Status: approved
+Status: closed 2026-11-26
 Epic: https://github.com/AndoNorth/disyard/issues/17
 Architecture note: none new, and `docs/architecture/01-system-context.drawio` is unchanged, because the gate adds a host-side test entry point and package but no deployed component, data path or contract; the ladder document of pass 2 is where the test levels are described
 Depends on (closed epics): #1, #2, #4, #5, #3, #12, #11, #6, #9, #10, #7, #8, #24

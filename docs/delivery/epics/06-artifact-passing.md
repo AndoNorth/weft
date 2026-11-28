@@ -1,6 +1,6 @@
 # Epic #12: Artifact passing - breakdown
 
-Status: approved
+Status: closed 2026-11-08
 Epic: https://github.com/AndoNorth/disyard/issues/12
 Architecture note: docs/architecture/13-state-envelope-artifacts.drawio
 Depends on (closed epics): Dev environment (#1), Fixed-resource cluster (#2), Job event envelope (#4), DAG configuration schema and validator (#5), Durable state and artifact storage (#3)

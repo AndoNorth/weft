@@ -1,6 +1,6 @@
 # Epic #2: Fixed-resource cluster and Tilt - breakdown
 
-Status: approved
+Status: closed 2026-10-30
 Epic: https://github.com/AndoNorth/disyard/issues/2
 Architecture note: docs/architecture/09-cluster-and-tilt.drawio
 Depends on (closed epics): Dev environment (#1, closed)
