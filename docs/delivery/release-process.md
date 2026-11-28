@@ -247,6 +247,8 @@ If CI later runs smoke or e2e, those rows move from pasted evidence to an API ch
 
 ### Release flow
 
+The step-by-step version for the person cutting a release is the [release runbook](../runbooks/release.md).
+
 Releases are cut from `main`, with no release branch.
 Why: there is one line of development and no older release to maintain, and `main` stays green by rule (`docs/delivery/method.md:90-91`).
 

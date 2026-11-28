@@ -8,6 +8,7 @@ Start with [dev setup](../dev-setup.md) when the machine is new, then come here.
 | Need | Go to |
 | --- | --- |
 | Bring up, run a job, check health, tear down, and the rules of the one cluster | [Operator runbook](operator.md) |
+| Cut a release, and what each refusal of `just release` means | [Release runbook](release.md) |
 | Which check proves what, what it costs and when to run it | [Validation matrix](validation-matrix.md) |
 | The levels of testing, their rules, budgets and gate order | [Test ladder](../acceptance-ladder.md) |
 | A symptom, and the dashboard and query that narrows it down | [Triage by symptom](triage.md) |
