@@ -6,6 +6,7 @@ import 'just/tooling.just'
 import 'just/acceptance.just'
 import 'just/verify.just'
 import 'just/seam.just'
+import 'just/release.just'
 
 [private]
 default:
