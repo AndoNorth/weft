@@ -1,8 +1,9 @@
 """The store fixtures, registered as a pytest plugin by the package entry point.
 
-`store` and `start_capped` hold one container for a module, `store_session` one for the whole
-session, `shelf` that one with its buckets created, and `running` is the context manager that all
-of them share.
+`store`, `shelf` and `start_capped` hold one container for a module, `store_session` one for the
+whole session, and `running` is the context manager that all of them share.
+`shelf` is a SeaweedFS with its buckets created that goes away with its module, so a module that
+holds a database and a dev server never finds a session store still running next to them.
 A session that runs any of them next to a database declares the marker `pair`.
 """
 
@@ -127,11 +128,11 @@ def store_session(t1, tmp_path_factory):
 
 
 @pytest.fixture(scope="module")
-def shelf(store_session):
-    """The session's one SeaweedFS with every contract bucket created, shared by a module that also
-    starts a database, so a session holds two containers whichever other module holds the store."""
-    store_session.store().create_buckets()
-    return store_session
+def shelf(t1, tmp_path_factory):
+    """A SeaweedFS with every contract bucket created, held for one test module."""
+    with running(t1, "seaweedfs", tmp_path_factory.mktemp("shelf")) as started:
+        started.store().create_buckets()
+        yield started
 
 
 @pytest.fixture

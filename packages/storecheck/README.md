@@ -55,7 +55,7 @@ SeaweedFS is never given the coarse `Read`, `List` and `Write` actions, because 
 ## Fixtures
 
 `dsy_storecheck.fixtures` is a pytest plugin registered through the `pytest11` entry point, so any package in the workspace gets the fixtures without a `conftest.py`.
-`store` holds one container per product for a module and `store_session` holds one SeaweedFS for the whole session.
+`store` holds one container per product for a module, `shelf` one SeaweedFS with the buckets created for a module, and `store_session` one SeaweedFS for the whole session.
 Both provision exactly the grants of `contracts/store/roles.yaml`, and SeaweedFS runs with `GOMEMLIMIT=512MiB` so 100,000 objects fit the 1 GiB container cap.
 `running(t1, product, directory, tmpfs)` is the context manager under both, for a test that needs its own container.
 A test that needs a store and a database together carries the markers `integration` and `pair`, which makes the `t1` session hold two containers.
