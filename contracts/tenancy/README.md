@@ -63,6 +63,6 @@ The first failing check wins, in this order.
 
 ## Changing it
 
-A change after the pin is a `contract-change` PR that touches `contracts/` only, lists the consumer issues and bumps `Version`.
+The rule for changing this contract once pinned is in [Changing a contract](../../docs/contracts.md#changing-a-contract).
 A value PR is the one exception: it changes only numbers marked `estimate: true` (the caps, the quotas and `reserve_interval`), touches only `tenancy.yaml`, runs `check.sh` and lists the consumers, with no version bump.
 A value PR never adds or removes a field, a tenant or a class, because a definitions import never deletes a queue and the messages of a removed queue would never be consumed.

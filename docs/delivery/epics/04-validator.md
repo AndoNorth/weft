@@ -1,6 +1,6 @@
 # Epic #5: DAG configuration schema and validator - breakdown
 
-Status: draft
+Status: closed 2026-11-01
 Epic: https://github.com/AndoNorth/disyard/issues/5
 Architecture note: docs/architecture/12-dag-and-workflow.drawio
 Depends on (closed epics): Dev environment (#1, closed), Job event envelope (#4, closed)

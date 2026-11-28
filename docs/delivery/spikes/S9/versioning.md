@@ -2,7 +2,7 @@
 
 Run on 2026-11-10.
 Owner: the [workflow engine epic](https://github.com/AndoNorth/disyard/issues/6), lane S, filed as [spike issue 315](https://github.com/AndoNorth/disyard/issues/315).
-Spec: the S9 block of [the workflow engine breakdown](../../epics/08-workflow-engine.md#s9-versioning-on-sdk-1350-and-the-pinned-bug-override), and decision D6 there.
+Spec: S9 and decision D6 of [the workflow engine breakdown](../../epics/08-workflow-engine.md#5-order-stubs-and-spikes).
 Method: [docs/delivery/method.md](../../method.md).
 Throwaway code: [code/](code/), run as `nix develop -c uv run python docs/delivery/spikes/S9/code/spike.py [out-dir]`.
 Every measured value below is a `figure <name> <value>` line of that run, and the name is given in backticks beside it.

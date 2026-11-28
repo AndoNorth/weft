@@ -15,7 +15,7 @@ def export(tmp_path: Path) -> Path:
     tree = tmp_path / "export"
     (tree / "scripts").mkdir(parents=True)
     shutil.copy(ROOT / "scripts/check-links.sh", tree / "scripts")
-    (tree / "README.md").write_text("[ok](docs/a.md)\n")
+    (tree / "README.md").write_text("# Top\n\n[ok](docs/a.md)\n")
     (tree / "docs").mkdir()
     (tree / "docs/a.md").write_text("[back](../README.md#top)\n")
     return tree
@@ -31,3 +31,11 @@ def test_a_dead_link_outside_any_repo_is_found(tmp_path):
     run = check(tree)
     assert run.returncode == 1
     assert "docs/a.md:1: dead link missing.md" in run.stdout
+
+
+def test_a_dead_anchor_outside_any_repo_is_found(tmp_path):
+    tree = export(tmp_path)
+    (tree / "docs/a.md").write_text("[gone](../README.md#nowhere)\n")
+    run = check(tree)
+    assert run.returncode == 1
+    assert "docs/a.md:1: dead link ../README.md#nowhere" in run.stdout
