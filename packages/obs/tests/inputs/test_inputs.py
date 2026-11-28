@@ -190,3 +190,23 @@ def test_the_process_without_a_dsn_exits_2(tmp_path):
     run = subprocess.run(command, env=env, capture_output=True, text=True, timeout=30)
     assert run.returncode == 2
     assert "DSY_STATE_INPUTS_DSN" in run.stderr
+
+
+def test_a_negative_value_is_skipped_logged_and_counted_without_stopping_the_pass(served, caplog):
+    meter, url = served
+    item = parse(
+        """
+inputs:
+  - name: negative_probe
+    unit: rows
+    source: {kind: sql, ref: select 1}
+"""
+    ).inputs[0]
+    exporter = Exporter(meter, UNREACHABLE, load())
+    exporter._gauges[item.name] = meter.create_gauge_float("dsy_state_negative_probe", "probe")
+
+    exporter._set(item, [("negative_probe", -1), ("negative_probe", 4)])
+
+    assert series(scrape(url), "dsy_state_negative_probe") == {"": 4.0}
+    assert exporter.errors == {"negative_probe": 1}
+    assert "negative_probe" in caplog.text
