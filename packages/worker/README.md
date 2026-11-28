@@ -12,13 +12,12 @@ Delivered:
 - `dsy_worker.pools.Context`: what a task path runs with.
 - `dsy_worker.testing.contract_cases`: a succeeding and a failing task input per pool over a seeded store, for `dsy_workflow.testing.activity_contract`, with the class each failing input fails with in `FAILS`.
   It builds the workload library, so it runs in the repository's dev environment only.
-
-Stubbed, each listed in its module's `STUBBED` and raising `NotImplementedError("not implemented: owned by lane <letter>")`:
-
 - `dsy_worker.runner`: `Child`, the process group runner.
 - `dsy_worker.pools.{compile,simulate,aggregate}`: `run`, the task path of each pool.
 - `dsy_worker.activity`: `run_task`.
 - `dsy_worker.service`, `dsy_worker.__main__` and `dsy_worker.probe`: the service, its command line and the egress probe.
+
+No module has a stub, so every `STUBBED` is empty, and `tests/test_stubs.py` fails on a name that raises the stub error without being listed there.
 
 ## Extras
 

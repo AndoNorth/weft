@@ -93,7 +93,7 @@ The pair therefore never repeats for a task, and two runs of one task never shar
 `vectors/keys.json` pins this under `workflow_retries`.
 The `entry` is the module of the source bundle that the compile task builds, so two entries over one bundle are two builds and two keys.
 The workflow and the compile worker both import `compile_cache_key` and compute it nowhere else.
-`dsy_keys` holds stubs that raise `NotImplementedError("not implemented: owned by lane K")` until the owning lane replaces them, and `packages/keys/tests/test_vectors.py` lists the stubbed names in `STUBBED`.
+`dsy_keys` has no stub, so `STUBBED` in `packages/keys/tests/test_vectors.py` is empty and every function matches its vectors.
 A vector that the real functions disagree with is fixed by a contract-change PR.
 
 ## Loader

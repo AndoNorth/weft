@@ -51,7 +51,6 @@ Substitution replaces that one value and never concatenates, computes or branche
 | `packages/jobexamples/` | `dsy_jobexamples` | the example documents, the parameter vectors and the generator |
 | `packages/jobtools/` | `dsy_jobtools` | `python -m dsy_jobtools {validate,plan,patch-check}` |
 
-Entry points that no lane has implemented yet raise `NotImplementedError` with `not implemented: owned by lane <letter>`.
 The plan and statistics models live in `dsy_jobdoc` next to the schema generator, so that one module generates every schema and the packages stay acyclic.
 The libraries of `jobdoc`, `jobcheck`, `plan` and `jobpatch` import no file system, clock, randomness, logging or event module and call neither `open` nor `print`, and `packages/jobdoc/tests/test_purity.py` keeps that true.
 The only exempt modules are the profile file reader, the schema generator and the `check` command.
