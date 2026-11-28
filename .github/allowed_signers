@@ -1,0 +1,3 @@
+# SSH public keys allowed to sign release tags, one per line: <principal> <key type> <key>.
+# scripts/release.sh verifies each tag against this file before it pushes the tag.
+# Add the captain's signing key as a line `captain ssh-ed25519 AAAA...`, and keep old lines so old tags still verify.

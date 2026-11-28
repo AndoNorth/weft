@@ -49,6 +49,8 @@ echo "== doctor"
 scripts/doctor.test.sh
 echo "== check-dev-ports"
 scripts/check-dev-ports.test.sh
+echo "== release"
+scripts/release.test.sh
 echo "== verify-lint"
 scripts/lint.sh --verify-skills
 if [ "$mode" = full ]; then
