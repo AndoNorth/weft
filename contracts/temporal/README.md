@@ -117,5 +117,5 @@ The first failing check wins, in this order.
 
 ## Changing it
 
-A change after the pin is a `contract-change` PR that touches `contracts/` only, lists the consumer issues and bumps `Version`.
+The rule for changing this contract once pinned is in [Changing a contract](../../docs/contracts.md#changing-a-contract).
 A queue, workflow or activity name changes only with a rollout plan, because a running job is pinned to the build that started it.

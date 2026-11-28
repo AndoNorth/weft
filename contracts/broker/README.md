@@ -169,6 +169,6 @@ The first failing check wins, in this order, where `bad-name`, `dlq-ttl-set` and
 
 ## Changing it
 
-A change after the pin is a `contract-change` PR that touches `contracts/` only, lists the consumer issues and bumps `Version`.
+The rule for changing this contract once pinned is in [Changing a contract](../../docs/contracts.md#changing-a-contract).
 A value PR is the one exception: it changes only `max_length`, the one number marked `estimate: true`, touches only `topology.yaml`, runs `check.sh` and lists the consumers, with no version bump.
 A definitions import adds and updates but never deletes, so removing a tenant or a priority class from a running broker is out of scope.

@@ -128,5 +128,5 @@ The library raises one of three typed errors, each with a `reason` and a `dlq_re
 
 ## Changing it
 
-A change after the pin is a `contract-change` PR and bumps `VERSION`.
+The rule for changing this contract once pinned is in [Changing a contract](../../docs/contracts.md#changing-a-contract).
 A change to a generated schema touches `contracts/`, the model under `packages/` and the regenerated file together, because the drift check fails otherwise.

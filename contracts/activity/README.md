@@ -177,5 +177,5 @@ Each `failure-classes` vector is the pinned table with one change.
 
 ## Changing it
 
-A change after the pin is a `contract-change` PR that touches `contracts/` only, lists the consumer issues and bumps `Version`.
+The rule for changing this contract once pinned is in [Changing a contract](../../docs/contracts.md#changing-a-contract).
 A new class in `exit-classes.yaml` or a new code in `failures.yaml` fails `class-not-covered` until this table has its row, so a change there comes with a row here.

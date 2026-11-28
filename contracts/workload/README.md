@@ -171,5 +171,5 @@ It exits 0 when valid, 1 with `reason: <code>: <detail>` on stderr when not, and
 
 ## Changing it
 
-A change after the pin is a `contract-change` PR that touches `contracts/` only, lists the consumer issues and bumps `Version`.
+The rule for changing this contract once pinned is in [Changing a contract](../../docs/contracts.md#changing-a-contract).
 A change to the WIT world also bumps the version in the `package` line, which changes every compile cache key.

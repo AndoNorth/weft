@@ -43,8 +43,13 @@ Epic numbers link to the epic issues on GitHub.
 | [stages](../contracts/stages/README.md) | #4 | a hand-written table, validated by its schema and the event catalogue | #3, #6, #8, #9, #10, #24 | Test and process scaffolding |
 
 Every contract directory also carries a `VERSION` file, a `check.sh` loader and valid and invalid vectors.
-That common layer is scaffolding for all of them, and a change after the pin is a contract-change PR that bumps the version and lists the consumers.
+That common layer is scaffolding for all of them.
 A new contract, or a change of owner or consumers, updates its row here and the diagram in the same PR, and `scripts/check-contracts-map.sh` fails when a row is missing or stale.
+
+## Changing a contract
+
+A change after the pin is a `contract-change` PR that touches `contracts/` only, lists the consumer issues and bumps the contract's `VERSION` file.
+The one exception is a generated schema, which changes together with its model under `packages/` and the regenerated file, because the drift check fails otherwise.
 
 ## Essential to the proof of concept
 

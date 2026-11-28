@@ -110,5 +110,5 @@ A code is also the name of the directory that holds its fixtures under `vectors/
 
 ## Changing it
 
-A change after the pin is a `contract-change` PR with a consumer list and a bump of `VERSION`.
+The rule for changing this contract once pinned is in [Changing a contract](../../docs/contracts.md#changing-a-contract).
 A change to a generated schema touches `contracts/`, the model under `packages/` and the regenerated file together, because the drift check fails otherwise.
